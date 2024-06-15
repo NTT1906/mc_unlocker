@@ -38,7 +38,6 @@ uint64_t GetBaseAddress(const HANDLE process) {
 	if (process == NULL) {
 		return 0; // No access to the process
 	}
-
 	HMODULE lphModule[1024];
 	DWORD lpcbNeeded = 0;
 
@@ -267,7 +266,7 @@ void str2ver(char *str, struct Version *ver) {
 
 int main(int argc, char** argv) {
 	struct Version v;
-	getFileVersion("C:\\Program Files\\WindowsApps\\Microsoft.MinecraftUWP_1.21.3.0_x64__8wekyb3d8bbwe\\Minecraft.Windows.exe", &v);
+//	getFileVersion("C:\\Program Files\\WindowsApps\\Microsoft.MinecraftUWP_1.21.3.0_x64__8wekyb3d8bbwe\\Minecraft.Windows.exe", &v);
 	char vStr[15];
 	ver2str(&v, vStr);
 	printf("Version: %s\n", vStr);
