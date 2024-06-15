@@ -190,6 +190,10 @@ struct Version{
 };
 
 bool getFileVersion(const char *fileName, struct Version *ver) {
+	if (ver == NULL) {
+		printf("Input version struct is NULL.\n");
+		return false;
+	}
 	DWORD handle = 0;
 	DWORD size = GetFileVersionInfoSize(fileName, &handle);
 	if (size == 0) {
@@ -221,6 +225,9 @@ bool getFileVersion(const char *fileName, struct Version *ver) {
 }
 
 int vercmp(struct Version *first, struct Version *second) {
+	if (first == NULL || second == NULL) {
+		return 0;
+	}
 	if (first->ms_f > second->ms_f) {
 		return 1;
 	}
@@ -257,6 +264,9 @@ int ver2str(struct Version *ver, char *str) {
 }
 
 void str2ver(char *str, struct Version *ver) {
+	if (ver == NULL) {
+		return;
+	}
 	char *tok = strtok(str, (const char *) '.');
 	ver->ms_f = tok == NULL ? strtol(tok, NULL, 10) : 0;
 	ver->ms_l = tok == NULL ? strtol(tok, NULL, 10) : 0;
@@ -265,11 +275,11 @@ void str2ver(char *str, struct Version *ver) {
 }
 
 int main(int argc, char** argv) {
-	struct Version v;
+//	struct Version v;
 //	getFileVersion("C:\\Program Files\\WindowsApps\\Microsoft.MinecraftUWP_1.21.3.0_x64__8wekyb3d8bbwe\\Minecraft.Windows.exe", &v);
-	char vStr[15];
-	ver2str(&v, vStr);
-	printf("Version: %s\n", vStr);
+//	char vStr[15];
+//	ver2str(&v, vStr);
+//	printf("Version: %s\n", vStr);
 	if (argc == 1) {
 		DWORD pid = GetProcessIDFromName(MINECRAFT_MODULE_BASENAME);
 		if (pid == 0) {
@@ -278,6 +288,7 @@ int main(int argc, char** argv) {
 			pid = GetProcessIDFromName(MINECRAFT_MODULE_BASENAME);
 		}
 		patch(pid);
+		system("pause");
 		return 0;
 	}
 	if (strcmp(argv[1], "-m") == 0) {
